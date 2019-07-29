@@ -1,0 +1,5 @@
+{
+  "env": {
+      "MONGO_ATLAS_CONNECTION_URL": "mongodb+srv://admin_user:ZKmhQsSv4GpKVTTu@atlas-cluster-0-glbri.mongodb.net/test?retryWrites=true&w=majority",
+  }
+}
