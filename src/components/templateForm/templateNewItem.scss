@@ -1,0 +1,46 @@
+
+
+.template-new-item {
+  // margin: 1rem 0;
+
+  .input-text {
+    display: inline;
+  }
+
+  &__type-select {
+    padding-right: 0; 
+    button {
+      width: 100%;
+      padding-right: 0;
+    }
+
+    .dropdown-toggle {
+      text-align: left;
+       &:after {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+       }
+    }
+  }
+
+  &__type-select-btn {
+    border: 1px solid #ced4da;
+  }
+
+  &__add-btn {
+    padding-right: 0;
+    margin-top: 1rem;
+    button {
+      
+    }
+  }
+  
+  &__label {
+
+  }
+
+  &__input {
+
+  }
+}

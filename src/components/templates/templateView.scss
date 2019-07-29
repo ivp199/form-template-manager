@@ -1,0 +1,30 @@
+.template-view {
+  margin-bottom: 0.5rem;
+  
+  &__name {
+    display: block;
+    border-radius: 0px;
+    width: 100%;
+    text-align: left;
+  }
+
+  &__body {
+    padding: 1rem 0.75rem;
+    border-radius: 0px;
+    border-top: 0;
+    border-color: #6c757d;
+  }
+
+  &__description {
+    font-size: 0.75rem;
+  }
+
+  &__cta-container {
+    margin: 0;
+  }
+
+  &__edit-btn, &__delete-btn {
+    border-radius: 0;
+
+  }
+}

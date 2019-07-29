@@ -1,0 +1,14 @@
+.input-text {
+  input.rounded-border {
+    border-radius: 25px;
+  }
+
+  label {
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+
+  &.display-horizontal {
+    color: red;
+  }
+}

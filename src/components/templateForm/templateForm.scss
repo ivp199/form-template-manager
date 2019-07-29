@@ -1,0 +1,34 @@
+
+.template-form {
+
+  &__fields-container-label, &__fields-container-btn {
+    // padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .form-control, button {
+    border-radius: 0;
+  }
+
+  &__new-field-container {
+    margin: 0;
+  }
+
+  &__new-field-fields {
+    padding: 0;
+  }
+
+  &__added-field-container {
+    margin-bottom: 1rem;
+  }
+
+  &__drag-handle {
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  &__new-field-error {
+    margin-top: 1rem;
+    padding: 0;
+  }
+}

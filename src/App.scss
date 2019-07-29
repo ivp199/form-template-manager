@@ -1,0 +1,27 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+body {
+  height: 100vh;
+  margin: 0;
+  background: #f3f3f3;
+}
+
+.app-container {
+  background: white;
+  min-height: 100vh;
+
+  input:focus, button:focus {
+    box-shadow: none !important;
+  }
+  
+  button {
+    &:disabled {
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  * {
+    border-radius: 0;
+  }
+}

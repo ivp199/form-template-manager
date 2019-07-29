@@ -1,0 +1,41 @@
+.form-card-view {
+  width: 15rem;
+  margin: 1rem;
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &__image {
+    width: 100px;
+    margin: 0.5rem auto;
+  }
+
+  &__body {
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  &__text {
+    font-size: 0.85rem; 
+  }
+
+  &__footer {
+    display: flex;
+    padding: 0;
+  }
+
+  &__add-item, &__view-item {
+    width: 50%;
+    border: none;
+  }
+
+  &__add-item {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}

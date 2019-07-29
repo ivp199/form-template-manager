@@ -1,0 +1,22 @@
+.login-component {
+  color: white;
+
+  .input-text {
+    margin-bottom: 0.5rem;
+  }
+
+  &__button {
+    margin-top: 1.5rem;
+  }
+
+  &__separator {
+    margin-top: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .login-component {
+    // padding: 24px;
+  }
+}

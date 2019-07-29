@@ -1,0 +1,21 @@
+.form-container {
+  margin: 1rem 0;
+
+  .form-header {
+    padding: 0 1rem;
+  }
+
+  .form-header__input {
+    padding-right: 1rem;
+  }
+
+  &__forms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .form-control, button {
+    border-radius: 0;
+  }
+}
