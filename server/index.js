@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-var createError = require('http-errors');
+const createError = require('http-errors');
 const path = require('path');
 const helmet = require('helmet');
 const cors = require('cors');
-var morgan = require('morgan');
+const morgan = require('morgan');
 const mongoose = require("mongoose");
+const uuid = require('uuid');
 const logger = require('./utils/logger');
 const routes = require('./routes');
 const app = express();
@@ -16,6 +17,13 @@ mongoose.connect("mongodb+srv://admin_user:ZKmhQsSv4GpKVTTu@atlas-cluster-0-glbr
   }
 );
 mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+  req.httpContext = {
+    reqId: uuid.v4(),
+  };
+  next();
+});
 
 app.use(morgan('combined', { stream: logger.stream }));
 app.use(helmet());
@@ -33,12 +41,12 @@ app.get('/', (req, res) => {
 });
 
 // not found error
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

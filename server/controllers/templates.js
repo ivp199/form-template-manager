@@ -14,11 +14,6 @@ export const getAllTemplates = (req, res) => {
           name: result.name,
           displayName: result.displayName,
           description: result.description,
-          // fields: result.fields.map(field => {
-          //   field.id = field._id;
-          //   delete field._id;
-          //   return field;
-          // }),
           fields: result.fields,
         }))
       };
@@ -70,26 +65,25 @@ export const saveTemplate = (req, res) => {
     .exec()
     .then(existingTemplate => {
       if (existingTemplate) {
-        res.status(400).json({
+        return res.status(400).json({
           error: `Template with name: ${template.name} already exists. Use some different name.`
         })
-      } else {
-        const templateObj = new Template({
-          _id: mongoose.Types.ObjectId(),
-          name: template.name,
-          displayName: template.displayName,
-          description: template.description,
-          fields: template.fields
-        });
-      
-        templateObj
-          .save()
-          .then(result => {
-            res.status(200).json({
-              message: `New template created with id ${result._id}.`
-            });
-          })
       }
+      const templateObj = new Template({
+        _id: mongoose.Types.ObjectId(),
+        name: template.name,
+        displayName: template.displayName,
+        description: template.description,
+        fields: template.fields
+      });
+    
+      templateObj
+        .save()
+        .then(result => {
+          res.status(200).json({
+            message: `New template created with id ${result._id}.`
+          });
+        });
     })
     .catch(err => {
       console.log(err);
@@ -100,7 +94,38 @@ export const saveTemplate = (req, res) => {
 }
 
 export const updateTemplate = (req, res) => {
+  const templateId = req.params.templateId;
+  const updateObj = {};
 
+  Object.keys(req.body).forEach(key => {
+    updateObj[key] = req.body[key];
+  });
+
+  Template.findOne({ _id: templateId})
+    .exec()
+    .then(matchingTemplate => {
+      if (!matchingTemplate) {
+        return res.status(404).json({
+          error: `Template with id: ${templateId} not found.`
+        })
+      }
+      Template.updateOne({ _id: templateId }, { $set: updateObj})
+        .exec()
+        .then(result => {
+          console.log(111, result)
+          res.status(200).json({
+            message: `Template  with id ${templateId} updated.`
+          });
+        })
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+
+  
 }
 
 export const deleteTemplate = (req, res) => {
@@ -109,8 +134,9 @@ export const deleteTemplate = (req, res) => {
   Template.deleteOne({ _id: templateId })
     .exec()
     .then(result => {
+      console.log(result)
       res.status(200).json({
-        message: `Template  with id ${result._id} deleted.`
+        message: `Template  with id ${templateId} deleted.`
       });
     })
     .catch(err => {

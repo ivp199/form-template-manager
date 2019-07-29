@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get('/', getAllTemplates);
 router.get('/:templateId', getTemplateById);
-router.post('/', saveTemplate);
 router.patch('/:templateId', updateTemplate);
+router.post('/', saveTemplate);
 router.delete('/:templateId', deleteTemplate);
 
 module.exports = router;
