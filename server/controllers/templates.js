@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Template from '../models/template';
-import { templates } from '../../mocks/templates';
 
 export const getAllTemplates = (req, res) => {
   Template
@@ -45,7 +44,9 @@ export const getTemplateById = (req, res) => {
         res.status(200).json({ template: newTemplateObj });
       } else {
         res.status(404).json({
-          message: `No template found for the given id: ${templateId}.`
+          error: {
+            message: `No template found for the given id: ${templateId}.`
+          }
         });
       }
     })
@@ -66,7 +67,9 @@ export const saveTemplate = (req, res) => {
     .then(existingTemplate => {
       if (existingTemplate) {
         return res.status(400).json({
-          error: `Template with name: ${template.name} already exists. Use some different name.`
+          error: {
+            message: `Template with name: ${template.name} already exists. Use some different name.`
+          }
         })
       }
       const templateObj = new Template({
@@ -81,7 +84,9 @@ export const saveTemplate = (req, res) => {
         .save()
         .then(result => {
           res.status(200).json({
-            message: `New template created with id ${result._id}.`
+            error: {
+              message: `New template created with id ${result._id}.`
+            }
           });
         });
     })
@@ -106,7 +111,9 @@ export const updateTemplate = (req, res) => {
     .then(matchingTemplate => {
       if (!matchingTemplate) {
         return res.status(404).json({
-          error: `Template with id: ${templateId} not found.`
+          error: {
+            message: `Template with id: ${templateId} not found.`
+          }
         })
       }
       Template.updateOne({ _id: templateId }, { $set: updateObj})

@@ -5,10 +5,9 @@ import './error.scss';
 
 const blockname = 'error';
 
-const Error = ({message, status, statusText}) => {
+const Error = ({type, message, status, statusText}) => {
   return (
-
-    <div className={`card ${blockname}`} >
+    <div className={`card ${blockname} ${type === 'row' ? 'show-horizontal': 'show-card'}`} >
       <div className={`${blockname}__image-container`}>
         <div className={`${blockname}__image`}><FontAwesomeIcon icon={['far', 'frown']} title="Error"/></div>
         <span>{status} - {statusText}</span>

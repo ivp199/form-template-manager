@@ -12,6 +12,7 @@ import TemplateField from './TemplateField';
 import Loader from '../loader';
 import Error from '../Error';
 import { getTemplateById, saveTemplate, updateTemplate } from '../../actions/templates.action';
+import { validateField, validateTemplate } from './utils';
 import './templateForm.scss';
 
 /**
@@ -32,6 +33,7 @@ class TemplateFormContainer extends Component {
     newfieldOptions: [],
     // fields: [{"id":"415cf4a5-1be9-4f5a-b190-4484074a0719","sequenceId":1,"fieldName":"first_name","displayName":"First name","type":"input-text"},{"id":"22d5b124-56ee-4040-8c4b-22a1f1a36da4","sequenceId":2,"fieldName":"age","displayName":"Age","type":"input-number"},{"id":"2d0b54f4-eed2-478e-839d-b0bcb1c07cfe","sequenceId":3,"fieldName":"gender","displayName":"Gender","type":"input-radio"},{"id":"4ef637fd-cbad-4268-a40d-1f9f442e3867","sequenceId":4,"fieldName":"last_name","displayName":"Last name","type":"input-text"}],
     fields: [],
+    templateError: '',
     newFieldError: '',
     template: {}
   }
@@ -79,21 +81,6 @@ class TemplateFormContainer extends Component {
     this.setState({ [field]: value, newfieldOptions });
   }
 
-  validateField = (field) => {
-    const { fieldName, displayName, type, options } = field;
-    if (!fieldName || !displayName || !type) {
-      return 'Please fill up all the fields.';
-    }
-
-    if (!(/^[a-z][a-z-]*[a-z]$/.test(fieldName))) {
-      return 'Name Field: Only lower case alphabets and - allowed.';
-    }
-
-    if (type.hasOptions && (!options || !options.length)) {
-      return `Type: Options are required for the selected type: ${type.text}`;
-    }
-  }
-
   onAddNewItem = () => {
     const { fields, newItemName, newItemDisplayName, newItemType, newfieldOptions } = this.state;
 
@@ -107,7 +94,7 @@ class TemplateFormContainer extends Component {
       field.options = newfieldOptions;
     }
 
-    const error = this.validateField(field);
+    const error = validateField(field);
     if (error) {
       this.setState({ newFieldError: error });
       return;
@@ -159,12 +146,8 @@ class TemplateFormContainer extends Component {
     this.setState({ fields: arrayMove(this.state.fields, oldIndex, newIndex) });
   }
 
-  validateTemplate = template => {
-
-  }
-
   updateTemplate = () => {
-    const { templateName, templateDisplayName, templateDescription, fields} = this.state;
+    const { templateDisplayName, templateDescription } = this.state;
     const updatedObj = {};
     
     if (templateDisplayName !== this.props.template.displayName) {
@@ -193,8 +176,9 @@ class TemplateFormContainer extends Component {
       fields: fields
     };
 
-    const error = this.validateTemplate(newTemplateObj);
+    const error = validateTemplate(newTemplateObj);
     if (error) {
+      this.setState({ templateError: error })
       return;
     }
 
@@ -254,13 +238,14 @@ class TemplateFormContainer extends Component {
       return ( <Loader /> );
     }
 
-    if (this.props.templateFetchError) {
-      const { message, status, statusText } = this.props.templateFetchError;
-      return (
-        <div className='template-form template-form__centered-box'>
-          <Error message={message} status={status} statusText={statusText}/>
-        </div>
-      )
+    let errorElm = null;
+    if (this.props.templateFetchError || this.state.templateError ) {
+      if (this.props.templateFetchError) {
+        const { message, status, statusText } = this.props.templateFetchError;
+        errorElm = <Error type={status === 404 ? '' : 'row'} message={message} status={status} statusText={statusText} />;
+      } else if (this.state.templateError) {
+        errorElm = <Error type='row' message={this.state.templateError} />;
+      }
     }
 
     const {
@@ -277,6 +262,7 @@ class TemplateFormContainer extends Component {
 
     return (
       <div className='template-form'>
+        { errorElm }
         <TemplateNameHeader
           templateName={templateName}
           templateDisplayName={templateDisplayName}

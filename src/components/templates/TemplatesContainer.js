@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TemplatesHeader from './TemplatesHeader';
 import TemplateView from './TemplateView';
 import Loader from '../loader';
+import Error from '../Error';
 import { getAllTemplates, deleteTemplate } from '../../actions/templates.action';
 import './templatesContainer.scss';
 
@@ -58,8 +59,19 @@ class TemplatesContainer extends Component {
       return ( <Loader /> );
     }
 
+    let errorElm = null;
+    if (this.props.templateFetchError || this.state.templateError ) {
+      if (this.props.templateFetchError) {
+        const { message, status, statusText } = this.props.templateFetchError;
+        errorElm = <Error type={status === 404 ? '' : 'row'} message={message} status={status} statusText={statusText} />;
+      } else if (this.state.templateError) {
+        errorElm = <Error type='row' message={this.state.templateError} />;
+      }
+    }
+
     return (
       <div className={`${blockname}`}>
+        { errorElm }
         <TemplatesHeader
           searchText={searchText}
           onSearchTextChange={this.onSearchTextChange}

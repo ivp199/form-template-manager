@@ -8,7 +8,13 @@ export const fetchingError = error => {
     }
   }
 
-  const { data: { message = ''} =  {}, status, statusText } = error.response || {};
+  const { status = '', statusText = ''} = error.response || {};
+  let { data: { error: { message = ''} = {}} =  {} } = error.response || {};
+
+  if (!message && error.message) {
+    message = error.message;
+  }
+
   const errorObj = {
     message,
     status,

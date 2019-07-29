@@ -2,9 +2,9 @@
   flex-direction: column;
   width: 300px;
   background: white;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  margin: autol;
+  margin: auto;
 
   &__image-container {
     width: 100%;
@@ -32,6 +32,48 @@
     text-align: center;
     color: #675d5d;
     font-weight: bolder;
+  }
+
+  &.show-card {
+    margin: 100px auto;
+  }
+
+  &.show-horizontal {
+    flex-direction: row;
+    width: 100%;
+    background: #e24747;
+    color: white;
+    padding: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    .error__image-container {
+      min-height: auto;
+      flex-direction: row;
+      width: auto;
+
+      span {
+        display: inline-block;
+        display: none;
+        margin-bottom: 0;
+        // margin-right: 20px;
+
+        &:after {
+          // content: "-"
+        }
+      }
+    }
+
+    .error__image {
+      font-size: 1rem;
+      margin-right: 10px;
+    }
+
+    .error__main-container {
+      padding: 0;
+      color: white;
+    }
+
   }
 
 }
