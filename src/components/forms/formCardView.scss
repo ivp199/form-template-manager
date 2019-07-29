@@ -1,6 +1,8 @@
 .form-card-view {
   width: 15rem;
   margin: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  
   &:hover {
     transform: scale(1.01);
   }

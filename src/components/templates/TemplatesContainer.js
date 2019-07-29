@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TemplatesHeader from './TemplatesHeader';
 import TemplateView from './TemplateView';
+import Loader from '../loader';
 import { getAllTemplates, deleteTemplate } from '../../actions/templates.action';
 import './templatesContainer.scss';
 
@@ -52,6 +53,11 @@ class TemplatesContainer extends Component {
   render() {
     const blockname = 'templates-container';
     const { searchText } = this.state;
+
+    if (this.props.isLoading) {
+      return ( <Loader /> );
+    }
+
     return (
       <div className={`${blockname}`}>
         <TemplatesHeader
@@ -77,6 +83,8 @@ TemplatesContainer.defaultProps = {
 
 const mapStateToProps = state => ({
   templates: state.templatesReducer.templates,
+  templateFetchError: state.fetchErrored.fetchingError,
+  isLoading: state.fetchIsLoading.isLoading,
 })
 
 const mapDispatchToProps = dispatch => ({

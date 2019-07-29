@@ -44,6 +44,7 @@ export const getAllTemplates = () => {
     axios.get(url)
       .then(response => {
         dispatch(templatesFetched(response.data));
+        dispatch(fetchingError(null));
         dispatch(fetchLoading(false));
       })
       .catch(err => {
@@ -60,6 +61,7 @@ export const getTemplateById = id => {
     axios.get(url)
       .then(response => {
         dispatch(templateFetched(response.data));
+        dispatch(fetchingError(null));
         dispatch(fetchLoading(false));
       })
       .catch(err => {
@@ -76,6 +78,7 @@ export const saveTemplate = template => {
     axios.post(url, { template })
       .then(response => {
         dispatch(templateSaved(response.data));
+        dispatch(fetchingError(null));
         dispatch(fetchLoading(false));
       })
       .catch(err => {
@@ -92,6 +95,7 @@ export const updateTemplate = (id, updatedObj) => {
     axios.patch(url, updatedObj)
       .then(response => {
         dispatch(templateUpdated(response.data));
+        dispatch(fetchingError(null));
         dispatch(fetchLoading(false));
       })
       .catch(err => {
@@ -108,6 +112,7 @@ export const deleteTemplate = id => {
     axios.delete(url)
       .then(response => {
         dispatch(templateDeleted(response.data));
+        dispatch(fetchingError(null));
         dispatch(getAllTemplates());
       })
       .catch(err => {

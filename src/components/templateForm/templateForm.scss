@@ -1,6 +1,12 @@
 
 .template-form {
 
+  &.template-form__centered-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+
   &__fields-container-label, &__fields-container-btn {
     // padding-right: 15px;
     padding-left: 15px;

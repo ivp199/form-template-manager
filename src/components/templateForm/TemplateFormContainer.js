@@ -9,6 +9,8 @@ import DragHandle from '../../utils/hocs/react-sortable-handle';
 import TemplateNameHeader from './TemplateNameHeader';
 import TemplateNewItem from './TemplateNewItem';
 import TemplateField from './TemplateField';
+import Loader from '../loader';
+import Error from '../Error';
 import { getTemplateById, saveTemplate, updateTemplate } from '../../actions/templates.action';
 import './templateForm.scss';
 
@@ -248,20 +250,17 @@ class TemplateFormContainer extends Component {
   }
 
   render() {
-    // if (this.props.templateFetchError) {
-    //   return (
-    //     <div className='template-form'>
-    //       <p>Some Error occured while fetching the template</p>
-    //     </div>
-    //   )
-    // }
-
     if (this.props.isLoading) {
+      return ( <Loader /> );
+    }
+
+    if (this.props.templateFetchError) {
+      const { message, status, statusText } = this.props.templateFetchError;
       return (
-        <div className='template-form'>
-          <p>Loading...</p>
+        <div className='template-form template-form__centered-box'>
+          <Error message={message} status={status} statusText={statusText}/>
         </div>
-      );
+      )
     }
 
     const {
@@ -324,8 +323,10 @@ class TemplateFormContainer extends Component {
   }
 }
 
-TemplateFormContainer.propTypes = {
-  template: {}
+TemplateFormContainer.defaultProps = {
+  template: {},
+  isLoading: false,
+  templateFetchError: null
 };
 
 const mapStateToProps = state => ({
