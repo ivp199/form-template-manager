@@ -9,7 +9,7 @@ import DragHandle from '../../utils/hocs/react-sortable-handle';
 import TemplateNameHeader from './TemplateNameHeader';
 import TemplateNewItem from './TemplateNewItem';
 import TemplateField from './TemplateField';
-import { getTemplateById, saveTemplate } from '../../actions/templates.action';
+import { getTemplateById, saveTemplate, updateTemplate } from '../../actions/templates.action';
 import './templateForm.scss';
 
 /**
@@ -161,8 +161,28 @@ class TemplateFormContainer extends Component {
 
   }
 
+  updateTemplate = () => {
+    const { templateName, templateDisplayName, templateDescription, fields} = this.state;
+    const updatedObj = {};
+    
+    if (templateDisplayName !== this.props.template.displayName) {
+      updatedObj.displayName = templateDisplayName
+    }
+
+    if (templateDescription !== this.props.template.description) {
+      updatedObj.description = templateDescription
+    }
+
+    this.props.updateTemplate(this.props.template.id, updatedObj);
+  }
+
   saveTemplate = () => {
-    const { templateName, templateDisplayName, templateDescription, fields } = this.state;
+    const { templateName, templateDisplayName, templateDescription, fields, editTemplate } = this.state;
+
+    if (editTemplate) {
+      this.updateTemplate();
+      return;
+    }
 
     const newTemplateObj = {
       name: templateName,
@@ -296,7 +316,7 @@ class TemplateFormContainer extends Component {
             className="btn btn-primary btn-block"
             onClick={this.saveTemplate}
           >
-            Save Template
+            {editTemplate ? 'Update Template' : 'Save Template' }
             </button>
         </div>
       </div>
@@ -310,7 +330,7 @@ TemplateFormContainer.propTypes = {
 
 const mapStateToProps = state => ({
   template: state.templatesReducer.template,
-  templateActionSuccesful: state.templatesReducer.templateActionSuccesful,
+  templateActionSuccessful: state.templatesReducer.templateActionSuccessful,
   templateFetchError: state.fetchErrored.fetchingError,
   isLoading: state.fetchIsLoading.isLoading,
 });
@@ -326,6 +346,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getTemplateById: id => dispatch(getTemplateById(id)),
   saveTemplate: template => dispatch(saveTemplate(template)),
+  updateTemplate: (id, obj) => dispatch(updateTemplate(id, obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TemplateFormContainer);

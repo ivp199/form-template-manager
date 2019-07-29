@@ -112,7 +112,6 @@ export const updateTemplate = (req, res) => {
       Template.updateOne({ _id: templateId }, { $set: updateObj})
         .exec()
         .then(result => {
-          console.log(111, result)
           res.status(200).json({
             message: `Template  with id ${templateId} updated.`
           });

@@ -60,13 +60,13 @@ const TemplateNewItem = ({
 
       <div className="col-3 last-col template-field__primary-btns">
         <button
-          className="btn btn-primary template-field__primary-btn"
+          className="btn btn-outline-secondary template-field__primary-btn"
           onClick={onAddNewItem}
         >
-          Add Item
+          Add
         </button>
         <button
-          className="btn btn-primary template-field__secondary-btn"
+          className="btn btn-outline-secondary template-field__secondary-btn"
           onClick={() => {}}
         >
           Reset

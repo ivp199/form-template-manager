@@ -17,13 +17,19 @@ export const templatesReducer = (state = {}, action) => {
     case SAVE_TEMPLATE:
       return {
         ...state,
-        templateActionSuccesful: true,
+        templateActionSuccessful: true,
+      }
+    
+    case EDIT_TEMPLATE:
+      return {
+        ...state,
+        templateActionSuccessful: action.data.template,
       }
 
     case DELETE_TEMPLATE:
       return {
         ...state,
-        templateActionSuccesful: true,
+        templateActionSuccessful: true,
       }
 
     default:

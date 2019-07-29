@@ -26,7 +26,8 @@ var options = {
 var logger = new winston.createLogger({
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.json()
+    winston.format.json(),
+    winston.format.prettyPrint()
   ),
   transports: [
     new winston.transports.File(options.file),

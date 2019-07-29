@@ -13,7 +13,7 @@ const TemplateView = ({ template, onDelete }) => {
         data-toggle="collapse"
         data-target={`#template-${template.id}`}
       >
-        {template.displayName}
+        {template.displayName} <span>{' '}({template.name})</span>
         {/* <i className="fa fa-angle-down"></i> */}
       </button>
       <div

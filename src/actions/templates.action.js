@@ -23,6 +23,13 @@ const templateSaved = data => {
   }
 }
 
+const templateUpdated = data => {
+  return {
+    type: EDIT_TEMPLATE,
+    data
+  }
+}
+
 const templateDeleted = data => {
   return {
     type: DELETE_TEMPLATE,
@@ -69,6 +76,22 @@ export const saveTemplate = template => {
     axios.post(url, { template })
       .then(response => {
         dispatch(templateSaved(response.data));
+        dispatch(fetchLoading(false));
+      })
+      .catch(err => {
+        dispatch(fetchingError(err));
+        dispatch(fetchLoading(false));
+      })
+  }
+}
+
+export const updateTemplate = (id, updatedObj) => {
+  const url = `http://localhost:8080/api/templates/${id}`;
+  return dispatch => {
+    dispatch(fetchLoading(true));
+    axios.patch(url, updatedObj)
+      .then(response => {
+        dispatch(templateUpdated(response.data));
         dispatch(fetchLoading(false));
       })
       .catch(err => {
