@@ -8,7 +8,7 @@ import { inputTypeOptions } from '../../constants/template';
 
 import './templateField.scss';
 
-const TemplateField = ({field, onFieldChange, isNameDisabled = false, onDelete}) => {
+const TemplateField = ({field, onFieldChange, disableUpdate = false, onDelete}) => {
   const [updatedField, setUpdatedField] = useState(field);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -35,8 +35,6 @@ const TemplateField = ({field, onFieldChange, isNameDisabled = false, onDelete})
     fieldOptionsElm = (
       <FieldOptions 
         options={field.options}
-        // onFieldOptionAdd={onOptionsChange}
-        // onFieldOptionDelete={onOptionsChange}
         isEditable={false}
       />
     )
@@ -68,14 +66,14 @@ const TemplateField = ({field, onFieldChange, isNameDisabled = false, onDelete})
       <InputText
         className="col-3 template-field__input"
         value={field.fieldName}
-        disabled={!isEditing}
+        disabled={disableUpdate || !isEditing}
         onChange={text => onFieldItemChange(text, 'fieldName')}
       />
 
       <InputText
         className="col-3 template-field__input"
         value={field.displayName}
-        disabled={!isEditing}
+        disabled={disableUpdate || !isEditing}
         onChange={text => onFieldItemChange(text, 'displayName')}
       />
       {renderType()}
@@ -84,6 +82,7 @@ const TemplateField = ({field, onFieldChange, isNameDisabled = false, onDelete})
         <button
           className="btn btn-outline-secondary template-field__primary-btn"
           onClick={onEditSave}
+          disabled={disableUpdate}
         >
           {
             isEditing
@@ -94,6 +93,7 @@ const TemplateField = ({field, onFieldChange, isNameDisabled = false, onDelete})
         <button
           className="btn btn-outline-secondary template-field__secondary-btn"
           onClick={() => onDelete(field.id)}
+          disabled={disableUpdate}
         >
           <FontAwesomeIcon icon={['far', 'trash-alt']} />
         </button>

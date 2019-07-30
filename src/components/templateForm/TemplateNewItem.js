@@ -20,6 +20,7 @@ const TemplateNewItem = ({
     fieldOpt,
     onFieldOptionAdd,
     onFieldOptionDelete,
+    disabled = false,
   }) => {
   let fieldOptionsElm = null;
 
@@ -41,6 +42,7 @@ const TemplateNewItem = ({
         value={newItemName}
         onChange={value => onChange('newItemName', value)}
         placeholder="Name..."
+        disabled={disabled}
       />
       <InputText
         type="text"
@@ -48,6 +50,7 @@ const TemplateNewItem = ({
         value={newItemDisplayName}
         onChange={value => onChange('newItemDisplayName', value)}
         placeholder="Display name..."
+        disabled={disabled}
       />
       <SelectDropdown
         className='col-3 template-new-item__type-select'
@@ -56,18 +59,21 @@ const TemplateNewItem = ({
         defaultOption={newItemType}
         onSelect={value => onChange('newItemType', value)}
         placeholder="Type..."
+        disabled={disabled}
       />
 
       <div className="col-3 last-col template-field__primary-btns">
         <button
           className="btn btn-outline-secondary template-field__primary-btn"
           onClick={onAddNewItem}
+          disabled={disabled}
         >
           Add
         </button>
         <button
           className="btn btn-outline-secondary template-field__secondary-btn"
           onClick={() => {}}
+          disabled={disabled}
         >
           Reset
         </button>

@@ -204,7 +204,7 @@ class TemplateFormContainer extends Component {
                 field={field}
                 onFieldChange={this.onFieldChange}
                 onDelete={this.onFieldItemDelete}
-                isNameDisabled={editTemplate}
+                disableUpdate={editTemplate}
               />
             </div>
           </div>
@@ -287,6 +287,7 @@ class TemplateFormContainer extends Component {
               fieldOpt={newfieldOptions}
               onFieldOptionAdd={this.onFieldOptionAdd}
               onFieldOptionDelete={this.onFieldOptionDelete}
+              disabled={editTemplate}
             />
           </div>
           {newFieldError && <div className="col-10 offset-2 text-danger template-form__new-field-error">{newFieldError}</div>}

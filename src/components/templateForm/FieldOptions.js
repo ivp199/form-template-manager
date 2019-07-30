@@ -38,11 +38,6 @@ const FieldOptions = props => {
         />
 
         {isEditable && <div className="col-2 field-options__button">
-          {/* <Button
-            label={'Delete'}
-            onClick={() => onFieldOptionDelete(opt.name)}
-            className="btn-secondary"
-          /> */}
           <Button
             label={'Delete'}
             onClick={() => onFieldOptionDelete(opt.name)}
