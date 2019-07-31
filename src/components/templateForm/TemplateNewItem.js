@@ -3,23 +3,22 @@ import PropTypes from 'prop-types';
 import InputText from '../input/InputText';
 import SelectDropdown from '../select/SelectDropdown';
 import FieldOptions from './FieldOptions';
+import Validations from './Validations';
 import { inputTypeOptions } from '../../constants/template';
 import './templateNewItem.scss';
 
 const TemplateNewItem = ({
-    // newItemNameField,
-    // newItemDisplayNameField,
-    // newItemTypeField,
     newItemName,
     newItemDisplayName,
     newItemType,
     onChange,
-    onAddNewItem,
+    onAddNewFieldItem,
     error,
     newSelectedItemType,
     fieldOpt,
     onFieldOptionAdd,
     onFieldOptionDelete,
+    onValidationChange,
     disabled = false,
   }) => {
   let fieldOptionsElm = null;
@@ -65,7 +64,7 @@ const TemplateNewItem = ({
       <div className="col-3 last-col template-field__primary-btns">
         <button
           className="btn btn-outline-secondary template-field__primary-btn"
-          onClick={onAddNewItem}
+          onClick={onAddNewFieldItem}
           disabled={disabled}
         >
           Add
@@ -80,6 +79,13 @@ const TemplateNewItem = ({
       </div>
 
       <div className="col-12">{fieldOptionsElm}</div>
+
+      <div className="col-12 template-field__validations">
+        <Validations
+          type={newSelectedItemType}
+          onValidationChange={(validation, isSelected) => onValidationChange(validation, isSelected)}
+        />
+      </div>
     </div>
   );
 };

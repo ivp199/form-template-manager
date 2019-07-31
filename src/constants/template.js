@@ -1,23 +1,37 @@
 export const inputTypeOptions = [
   {
     text: 'text',
+    validations: ['required', 'alphabets'],
   },
   {
     text: 'number',
+    validations: ['required'],
+  },
+  {
+    text: 'email',
+    validations: ['required'],
+  },
+  {
+    text: 'number',
+    validations: ['required'],
   },
   {
     text: 'checkbox',
     hasOptions: true,
+    validations: ['required'],
   },
   {
     text: 'radio',
     hasOptions: true,
+    validations: ['required'],
   },
   {
     text: 'image',
+    validations: ['required'],
   },
   {
-    text: 'date-time'
+    text: 'date-time',
+    validations: ['required'],
   }
 ]
 

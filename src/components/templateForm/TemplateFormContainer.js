@@ -31,6 +31,7 @@ class TemplateFormContainer extends Component {
     newItemDisplayName: '',
     newItemType: {},
     newfieldOptions: [],
+    newFieldValidations: [],
     // fields: [{"id":"415cf4a5-1be9-4f5a-b190-4484074a0719","sequenceId":1,"fieldName":"first_name","displayName":"First name","type":"input-text"},{"id":"22d5b124-56ee-4040-8c4b-22a1f1a36da4","sequenceId":2,"fieldName":"age","displayName":"Age","type":"input-number"},{"id":"2d0b54f4-eed2-478e-839d-b0bcb1c07cfe","sequenceId":3,"fieldName":"gender","displayName":"Gender","type":"input-radio"},{"id":"4ef637fd-cbad-4268-a40d-1f9f442e3867","sequenceId":4,"fieldName":"last_name","displayName":"Last name","type":"input-text"}],
     fields: [],
     templateError: '',
@@ -81,8 +82,8 @@ class TemplateFormContainer extends Component {
     this.setState({ [field]: value, newfieldOptions });
   }
 
-  onAddNewItem = () => {
-    const { fields, newItemName, newItemDisplayName, newItemType, newfieldOptions } = this.state;
+  onAddNewFieldItem = () => {
+    const { fields, newItemName, newItemDisplayName, newItemType, newfieldOptions, newFieldValidations } = this.state;
 
     const field =  {
       fieldName: newItemName,
@@ -101,6 +102,7 @@ class TemplateFormContainer extends Component {
     } else {
       field.id = uuid.v4();
       field.sequenceId = fields.length + 1;
+      field.validations = newFieldValidations;
       const newFields = [...fields, field];
 
       this.setState({
@@ -140,6 +142,17 @@ class TemplateFormContainer extends Component {
     const { newfieldOptions } = this.state;
     const afterDeleteOptions = newfieldOptions.filter(opt => opt.name !== name);
     this.setState({ newfieldOptions: afterDeleteOptions });
+  }
+
+  onNewFieldValidationChange = (validation, isSelected) => {
+    const { newFieldValidations } = this.state;
+    if (isSelected && !newFieldValidations.includes(validation)) {
+      newFieldValidations.push(validation);
+      this.setState({ newFieldValidations });
+    } else if (newFieldValidations.includes(validation)) {
+      newFieldValidations.splice(newFieldValidations.indexOf(validation), 1);
+      this.setState({ newFieldValidations });
+    }
   }
 
   onRearrange = ({oldIndex, newIndex}) => {
@@ -281,12 +294,13 @@ class TemplateFormContainer extends Component {
               newItemDisplayName={newItemDisplayName}
               newItemType={newItemType}
               onChange={this.onTextValueChange}
-              onAddNewItem={this.onAddNewItem}
+              onAddNewFieldItem={this.onAddNewFieldItem}
               error={newFieldError}
               newSelectedItemType={newItemType}
               fieldOpt={newfieldOptions}
               onFieldOptionAdd={this.onFieldOptionAdd}
               onFieldOptionDelete={this.onFieldOptionDelete}
+              onValidationChange={this.onNewFieldValidationChange}
               disabled={editTemplate}
             />
           </div>
