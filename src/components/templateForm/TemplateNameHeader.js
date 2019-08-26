@@ -4,7 +4,14 @@ import InputText from '../input/InputText';
 
 import './templateNameHeader.scss';
 
-const TemplateNameHeader = ({templateName, templateDisplayName, templateDescription, isNameDisabled = false, onChange}) => {
+const TemplateNameHeader = ({
+  templateName,
+  templateDisplayName,
+  templateDescription,
+  isNameDisabled = false,
+  onChange,
+  error = {},
+}) => {
   return (
     <div className="row align-items-center template-name-header">
       <label
@@ -20,6 +27,7 @@ const TemplateNameHeader = ({templateName, templateDisplayName, templateDescript
         onChange={value => onChange('templateName', value)}
         placeholder="Template name..."
         disabled={isNameDisabled}
+        inlineError={error.name}
       />
 
       <label
@@ -34,6 +42,7 @@ const TemplateNameHeader = ({templateName, templateDisplayName, templateDescript
         className="col-10 template-name-header__input"
         onChange={value => onChange('templateDisplayName', value)}
         placeholder="Template name..."
+        inlineError={error.displayName}
       />
 
       <label
@@ -48,6 +57,7 @@ const TemplateNameHeader = ({templateName, templateDisplayName, templateDescript
         value={templateDescription}
         onChange={value => onChange('templateDescription', value)}
         placeholder="Description"
+        inlineError={error.description}
       />
     </div>
   );

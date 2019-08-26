@@ -17,6 +17,7 @@ const InputText = props => {
     displayType,
     labelClassName = '',
     inputClassName = '',
+    inlineError,
   } = props;
   const [text, setText] = useState(value ? value : '');
 
@@ -30,6 +31,7 @@ const InputText = props => {
     displayTypeCls = 'display-horizontal'
   } 
 
+  const inputClsName = `form-control ${rounderBorder && 'rounded-border'} ${inputClassName || ''} ${inlineError ? 'is-invalid': ''} `;
   return (
     <div className={`input-text ${displayTypeCls} ${className}`}>
       {label && <label htmlFor={id} className={labelClassName}>{label}</label>}
@@ -39,10 +41,12 @@ const InputText = props => {
         value={text}
         value={value}
         disabled={disabled}
-        className={`form-control ${rounderBorder && 'rounded-border'} ${inputClassName || ''}`}
+        className={inputClsName}
         placeholder={placeholder}
         onChange={handleChange}
       />
+
+      {inlineError && <p className='inline-error'>{inlineError}</p>}
     </div>
   );
 };

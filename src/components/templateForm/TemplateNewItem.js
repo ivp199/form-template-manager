@@ -34,7 +34,7 @@ const TemplateNewItem = ({
   }
 
   return (
-    <div className="row align-items-center template-new-item">
+    <div className="row template-new-item">
       <InputText
         type="text"
         className="col-3 template-new-item__input"
@@ -42,6 +42,7 @@ const TemplateNewItem = ({
         onChange={value => onChange('newItemName', value)}
         placeholder="Name..."
         disabled={disabled}
+        inlineError={error.fieldName}
       />
       <InputText
         type="text"
@@ -50,6 +51,7 @@ const TemplateNewItem = ({
         onChange={value => onChange('newItemDisplayName', value)}
         placeholder="Display name..."
         disabled={disabled}
+        inlineError={error.displayName}
       />
       <SelectDropdown
         className='col-3 template-new-item__type-select'
@@ -59,6 +61,7 @@ const TemplateNewItem = ({
         onSelect={value => onChange('newItemType', value)}
         placeholder="Type..."
         disabled={disabled}
+        inlineError={error.type}
       />
 
       <div className="col-3 last-col template-field__primary-btns">

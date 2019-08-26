@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
 import arrayMove from 'array-move';
 import ReactSortableHoc from '../../utils/hocs/react-sortable-hoc';
 import SortableItem from '../../utils/hocs/react-sortable-item';
@@ -23,7 +22,6 @@ import './templateForm.scss';
 class TemplateFormContainer extends Component {
   state = {
     editTemplate: false,
-    id: uuid.v4(),
     templateName: '',
     templateDisplayName: '',
     templateDescription: '',
@@ -95,12 +93,11 @@ class TemplateFormContainer extends Component {
       field.options = newfieldOptions;
     }
 
-    const error = validateField(field);
+    const error = validateField(fields, field);
     if (error) {
       this.setState({ newFieldError: error });
       return;
     } else {
-      field.id = uuid.v4();
       field.sequenceId = fields.length + 1;
       field.validations = newFieldValidations;
       const newFields = [...fields, field];
@@ -251,13 +248,14 @@ class TemplateFormContainer extends Component {
       return ( <Loader /> );
     }
 
+    // TODO: correct below logic and optimise
     let errorElm = null;
-    if (this.props.templateFetchError || this.state.templateError ) {
+    if (this.props.templateFetchError || (this.state.templateError && this.state.templateError.generic )) {
       if (this.props.templateFetchError) {
         const { message, status, statusText } = this.props.templateFetchError;
         errorElm = <Error type={status === 404 ? '' : 'row'} message={message} status={status} statusText={statusText} />;
-      } else if (this.state.templateError) {
-        errorElm = <Error type='row' message={this.state.templateError} />;
+      } else if (this.state.templateError && this.state.templateError.generic ) {
+        errorElm = <Error type='row' message={this.state.templateError.generic} />;
       }
     }
 
@@ -270,7 +268,8 @@ class TemplateFormContainer extends Component {
       newItemDisplayName,
       newFieldError,
       newfieldOptions,
-      newItemType
+      newItemType,
+      templateError
     } = this.state;
 
     return (
@@ -282,6 +281,7 @@ class TemplateFormContainer extends Component {
           templateDescription={templateDescription}
           onChange={this.onTextValueChange}
           isNameDisabled={editTemplate}
+          error={templateError}
         />
         <hr />
         
@@ -304,7 +304,11 @@ class TemplateFormContainer extends Component {
               disabled={editTemplate}
             />
           </div>
-          {newFieldError && <div className="col-10 offset-2 text-danger template-form__new-field-error">{newFieldError}</div>}
+          {newFieldError.generic
+            && <div className="col-10 offset-2 text-danger template-form__new-field-error">
+                {newFieldError.generic}
+              </div>
+          }
         </div>
 
         <hr />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './selectDropdown.scss';
 
 const SelectDropdown = props => {
-  const { id, className, options, defaultOption, onSelect, label, placeholder, btnClassName, disabled=false } = props;
+  const { id, className, options, defaultOption, onSelect, label, placeholder, btnClassName, disabled=false, inlineError } = props;
   const [selectedOption, setSelectedOption] = useState(defaultOption ? defaultOption : {text: '', value: ''} );
 
   const onOptionClick = opt => {
@@ -28,7 +28,7 @@ const SelectDropdown = props => {
     <div className={`select-dropdown ${className}`}>
       {label && <label for={id}>{label}</label>}
       <button
-        className={`btn dropdown-toggle ${btnClassName}`}
+        className={`btn dropdown-toggle ${btnClassName ? btnClassName : ''} ${inlineError ? 'is-invalid': ''}`}
         type="button"
         id="dropdownMenuButton"
         data-toggle="dropdown"
@@ -38,6 +38,8 @@ const SelectDropdown = props => {
       >
         {selectedOption.text || placeholder}
       </button>
+
+      {inlineError && <p className='inline-error'>{inlineError}</p>}
 
       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {getOptions()}

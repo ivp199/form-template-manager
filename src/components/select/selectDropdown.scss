@@ -8,4 +8,21 @@
       top: 15px;
      }
   }
+
+  .is-invalid {
+    background-image: none;
+    padding-right: 0.75rem;
+    border-bottom: 0;
+  }
+
+  .inline-error {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 0.75rem;
+    margin-bottom: 0;
+    color: #e24747;
+    background-color: #f9e6e9;
+    border: 1px solid #e24747;
+    border-top: 0;
+  }
 }
